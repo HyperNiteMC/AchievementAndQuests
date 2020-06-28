@@ -2,7 +2,7 @@ name: AchievementAndQuests
 main: com.ericlam.mc.achievementquests.AchievementQuests
 version: ${project.version}
 api-version: "1.15"
-depends: [HyperNiteMC-Core, PlaceholderAPI, KotlinExtension]
+depend: [HyperNiteMC-Core, PlaceholderAPI, KotlinExtension]
 commands:
   achieve:
     description: achieve command
