@@ -1,6 +1,7 @@
 package com.ericlam.mc.achievementquests
 
 import com.hypernite.mc.hnmc.core.main.HyperNiteMC
+import com.hypernite.mc.kotlinex.format
 import com.hypernite.mc.kotlinex.schedule
 import com.hypernite.mc.kotlinex.translateColor
 import kotlinx.coroutines.runBlocking
@@ -23,12 +24,12 @@ object SQL {
         }
     }
 
-    fun updateInventory(player: Player, inv: Inventory){
+    fun updateInventory(player: Player, inv: Inventory, type: UI.Type){
         val items = inv.contents.filter { item -> item?.itemMeta?.persistentDataContainer?.has(AchievementQuests.plugin.key("achievement.node"), PersistentDataType.STRING) ?: false }
         for (item in items) {
             val meta = item.itemMeta
             val node = meta.persistentDataContainer.get(AchievementQuests.plugin.key("achievement.node"), PersistentDataType.STRING)!!
-            val passStat = AchievementQuests.achievementYml.items.goals[node]?.target?.let { player.passStat(it) } ?: let {
+            val passStat = (if (type == UI.Type.Achievement) AchievementQuests.achievementYml.items.goals[node]?.target else AchievementQuests.timedQuestYml.items.goals[node]?.target)?.let { player.passStat(it) } ?: let {
                 player.sendMessage("$node is invalid achievement")
                 false
             }
@@ -45,7 +46,7 @@ object SQL {
                 }
             } ?: continue
 
-            meta.setDisplayName(stat.text.translateColor())
+            meta.setDisplayName((if (type == UI.Type.Achievement) AchievementQuests.achievementYml.items.goals[node]?.name else AchievementQuests.timedQuestYml.items.goals[node]?.name)?.format(stat.text))
             item.itemMeta = meta
             item.type = stat.material
         }

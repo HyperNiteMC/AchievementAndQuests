@@ -47,8 +47,8 @@ class AchievementQuests : JavaPlugin() {
             listen<PlayerJoinEvent> {
                 val ui = UI.getUI(player)
                 schedule {
-                    SQL.updateInventory(player, ui.achievement)
-                    SQL.updateInventory(player, ui.timedQuest)
+                    SQL.updateInventory(player, ui.achievement, UI.Type.Achievement)
+                    SQL.updateInventory(player, ui.timedQuest, UI.Type.Quest)
                 }
             }
         }
