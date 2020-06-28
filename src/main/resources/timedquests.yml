@@ -1,0 +1,29 @@
+title: "GSG - 限時任務"
+rows: 6
+items:
+  headers:
+    gsg-kill:
+      slot: 0
+      name: "殺敵相關 {0}"
+      lore:
+        - "殺敵相關的成就"
+      material: DIAMOND_SWORD
+  goals:
+    gsg-kill-1-1h:
+      slot: 1
+      name: "第一滴血 {0}"
+      lore:
+        - "第一次殺死玩家"
+        - "目標: 需要在一小時內殺死一次玩家"
+      timer: 3600
+      target:
+        gsg_kills: 1
+      gsg-kill-10-1d:
+        slot: 2
+        name: "十次擊殺 {0}"
+        lore:
+          - "殺死玩家十次"
+          - "目標: 需要在一天內殺死10次玩家"
+        timer: 86400
+        target:
+          gsg_kills: 10

@@ -1,0 +1,10 @@
+status:
+  unavailable:
+    material: RED_STAINED_GLASS_PANE
+    text: "未完成"
+  available:
+    material: YELLOW_STAINED_GLASS_PANE
+    text: "可完成"
+  accomplished:
+    material: GREEN_STAINED_GLASS_PANE
+    text: "已完成"
