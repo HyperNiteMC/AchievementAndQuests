@@ -2,10 +2,7 @@ package com.ericlam.mc.achievementquests
 
 import com.hypernite.mc.hnmc.core.main.HyperNiteMC
 import com.hypernite.mc.kotlinex.format
-import com.hypernite.mc.kotlinex.schedule
-import com.hypernite.mc.kotlinex.translateColor
 import kotlinx.coroutines.runBlocking
-import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.persistence.PersistentDataType
@@ -24,12 +21,16 @@ object SQL {
         }
     }
 
-    fun updateInventory(player: Player, inv: Inventory, type: UI.Type){
-        val items = inv.contents.filter { item -> item?.itemMeta?.persistentDataContainer?.has(AchievementQuests.plugin.key("achievement.node"), PersistentDataType.STRING) ?: false }
+    fun updateAchievementUI(player: Player, inv: Inventory){
+        val items = inv.contents.filter { item ->
+            val hasNode = item?.itemMeta?.persistentDataContainer?.has(AchievementQuests.plugin.key("achievement.node"), PersistentDataType.STRING) ?: false
+            val notAccomplished = item.type != AchievementQuests.configYml.status.accomplished.material
+            hasNode && notAccomplished
+        }
         for (item in items) {
             val meta = item.itemMeta
             val node = meta.persistentDataContainer.get(AchievementQuests.plugin.key("achievement.node"), PersistentDataType.STRING)!!
-            val passStat = (if (type == UI.Type.Achievement) AchievementQuests.achievementYml.items.goals[node]?.target else AchievementQuests.timedQuestYml.items.goals[node]?.target)?.let { player.passStat(it) } ?: let {
+            val passStat = AchievementQuests.achievementYml.items.goals[node]?.target?.let { player.passStat(it) } ?: let {
                 player.sendMessage("$node is invalid achievement")
                 false
             }
@@ -46,7 +47,7 @@ object SQL {
                 }
             } ?: continue
 
-            meta.setDisplayName((if (type == UI.Type.Achievement) AchievementQuests.achievementYml.items.goals[node]?.name else AchievementQuests.timedQuestYml.items.goals[node]?.name)?.format(stat.text))
+            meta.setDisplayName(AchievementQuests.achievementYml.items.goals[node]?.name?.format(stat.text))
             item.itemMeta = meta
             item.type = stat.material
         }

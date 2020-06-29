@@ -42,13 +42,16 @@ class AchievementQuests : JavaPlugin() {
         achievementYml = manager.getConfigAs(AchievementYml::class.java)
         timedQuestYml = manager.getConfigAs(TimedQuestYml::class.java)
         langYml = manager.getConfigAs(LangYml::class.java)
+        
+        schedule(async = true) { SQL.initSQL() }
 
         listener(this) {
             listen<PlayerJoinEvent> {
                 val ui = UI.getUI(player)
                 schedule {
-                    SQL.updateInventory(player, ui.achievement, UI.Type.Achievement)
-                    SQL.updateInventory(player, ui.timedQuest, UI.Type.Quest)
+                    logger.info("正在更新 ${player.name} 的 成就/任務界面...")
+                    logger.info("TaskId: ${this.taskId}")
+                    SQL.updateAchievementUI(player, ui.achievement)
                 }
             }
         }

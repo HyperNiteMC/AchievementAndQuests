@@ -2,6 +2,7 @@ package com.ericlam.mc.achievementquests
 
 import com.hypernite.mc.kotlinex.dsl.inventory
 import com.hypernite.mc.kotlinex.dsl.item
+import com.hypernite.mc.kotlinex.format
 import com.hypernite.mc.kotlinex.translateColor
 import kotlinx.coroutines.runBlocking
 import org.bukkit.inventory.Inventory
@@ -27,6 +28,12 @@ object UIModel {
                             header.lore.forEach { line -> -(line.translateColor()) }
                         }
 
+                        event {
+                            click {
+                                it.isCancelled = true
+                            }
+                        }
+
                     }
                 }
             }
@@ -46,6 +53,7 @@ object UIModel {
 
                             click {
                                 e ->
+                                e.isCancelled = true
                                 val item = e.currentItem ?: return@click
                                 val m = item.type
                                 if (m == AchievementQuests.configYml.status.available.material){
@@ -57,9 +65,15 @@ object UIModel {
                                             }
                                         }
 
+                                        val stat =  AchievementQuests.configYml.status.accomplished
+                                        item.type = stat.material
+
                                         if (result.isIgnore){
-                                            item.type = AchievementQuests.configYml.status.accomplished.material
                                             e.whoClicked.sendMessage(AchievementQuests.langYml["accomplished"])
+                                        }else{
+                                            val meta = item.itemMeta
+                                            meta.setDisplayName(AchievementQuests.achievementYml.items.goals[node]?.name?.format(stat.text))
+                                            item.itemMeta = meta
                                         }
                                     }
                                 }else{
