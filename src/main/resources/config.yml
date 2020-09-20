@@ -8,3 +8,9 @@ status:
   accomplished:
     material: GREEN_STAINED_GLASS_PANE
     text: "已完成"
+  unaccepted:
+    material: WHITE_STAINED_GLASS_PANE
+    text: "可接受"
+  cooling:
+    material: BLACK_STAINED_GLASS_PANE
+    text: "冷卻中"

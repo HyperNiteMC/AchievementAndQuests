@@ -1,3 +1,6 @@
 prefix: "成就系統// "
 accomplished: "already accomplished"
 condition-not-pass: "condition not pass"
+accepted: "you accepted quest {0}, time limit {1} secs"
+finished: "successfully finished quest {0}"
+cooling: "cooling time remain {0}"

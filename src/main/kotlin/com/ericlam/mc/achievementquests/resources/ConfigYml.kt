@@ -11,7 +11,9 @@ data class ConfigYml(
     data class Status(
             val unavailable: Stat,
             val available: Stat,
-            val accomplished: Stat
+            val accomplished: Stat,
+            val unaccepted: Stat,
+            val cooling: Stat
     ){
         data class Stat(
                 val material: Material,

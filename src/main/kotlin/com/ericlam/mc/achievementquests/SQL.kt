@@ -53,15 +53,29 @@ object SQL {
         }
     }
 
+    fun updateDailyUI(player: Player, inv: Inventory) {
+        val items = inv.contents
+        for (item in items) {
+            val meta = item.itemMeta
+
+        }
+
+    }
+
     object PlayerData : Table("AAQ_PlayerData") {
         val aid: Column<String> = varchar("achievement_id", 100).primaryKey()
         val timestamp: Column<Long> = long("timestamp")
     }
 
     object TimedQuest : Table("AAQ_TimedQuests") {
-        val uuid: Column<UUID> = uuid("uuid").primaryKey()
-        val node: Column<String> = varchar("achievement_node", 70)
-        val originalStats: Column<Int> = integer("o_stats")
+        val aid: Column<String> = varchar("achievement_id", 100).primaryKey()
         val started: Column<Long> = long("started_time")
+        val last_finished: Column<Long?> = long("last_finished_time").nullable()
+    }
+
+    object OriginalStats : Table("AAQ_TimedQuests_OriginalStats") {
+        val aid: Column<String> = varchar("achievement_id", 100).references(TimedQuest.aid)
+        val placeholder: Column<String> = varchar("placeholder", 30)
+        val stats: Column<Int> = integer("stat")
     }
 }
