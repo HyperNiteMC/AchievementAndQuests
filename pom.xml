@@ -10,8 +10,8 @@
 
     <repositories>
         <repository>
-            <id>xuan</id>
-            <url>https://xuan.nctu.me:8081/repository/Maven/</url>
+            <id>hypernite</id>
+            <url>https://nexus.chu77.xyz/repository/developer/</url>
         </repository>
         <repository>
             <id>placeholderapi</id>
@@ -22,18 +22,18 @@
     <dependencies>
         <dependency>
             <groupId>patched</groupId>
-            <artifactId>1.15</artifactId>
-            <version>R1</version>
+            <artifactId>1.16</artifactId>
+            <version>r2</version>
         </dependency>
         <dependency>
             <groupId>com.hypernite.mc</groupId>
             <artifactId>core-api</artifactId>
-            <version>7.5.9</version>
+            <version>7.6.4</version>
         </dependency>
         <dependency>
             <groupId>com.hypernite.mc</groupId>
             <artifactId>kotlin-extension-api</artifactId>
-            <version>1.0.10</version>
+            <version>1.0.12</version>
         </dependency>
         <dependency>
             <groupId>me.clip</groupId>
